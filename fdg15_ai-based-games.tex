@@ -73,12 +73,12 @@
 \numberofauthors{1}
 \author{
 \alignauthor
-anonymous
-%Michael Cook, Brent Harrison and Mark O. Riedl\\
-%\affaddr{?}\\
-%\affaddr{?}\\
-%\affaddr{all over the fucking place}\\
-%\email{many}
+%anonymous
+Michael Cook, Gillian Smith, Tommy Thompson, Julian Togelius, Alex Zook\\
+\affaddr{?}\\
+\affaddr{?}\\
+\affaddr{all over the fucking place}\\
+\email{legion@we.are.many}
 }
 
 \toappear{}
@@ -99,21 +99,24 @@ We made {\sc Contrabot} and {\sc What Did You Do?}.
 
 \section{Introduction}
 
-\noindent AI-based games, woo!
+\noindent Game designs typically use artificial intelligence (AI) as a tool to support creating a desired experience.
+Recently, AI-based games have emerged as an alternative paradigm that foregrounds interaction with an AI system or agent as the core component of a game.
+Example AI-based games include {\it Black \& White} (about teaching an AI avatar), {\it Spy Party} (about mimicking AI routines), and {\it The Sims} (about guiding simple AI `pets').
+This abstract discusses two prototype AI-based games---{\sc Contrabot} and {\sc What Did You Do?}---that explore interacting with machine learning algorithms as a core gameplay loop.
 
-Something to the effect that we need more examples of AI-based games to explore the space.
+\section{Contrabot}
 
-\section{{\sc Contrabot}}
-\todo{copy-pasta from Dagstuhl report}
+\begin{figure}[tb]
+\centering
+\includegraphics[width=0.5\textwidth]{images/contrabot}
+\caption{{\sc Contrabot} interface: player input code on the left; inspector learned code in the middle; smuggler learned code on the right. Agent memories are shown as the set of smaller codes along the right of the larger central codes.}
+\label{fig:contrabot}
+\end{figure}
 
-Contrabot (Figure \ref{fig:contrabot}) is a game prototype for an AI-based game, developed at the 2015 Dagstuhl seminar on Computation and Artificial Intelligence in Games.
-AI-based games foreground interaction with an AI system in the player's experience.
-Our goal with Contrabot was to build a game based on agents that learn, crafting gameplay around understanding, playing against and ultimately deceiving a machine learning system.
-
-You play as a smuggler trying to secretly label boxes to communicate with a contact on the other side of a customs checkpoint.
-The smuggler is trying to learn the code you use to indicate a box is contraband---but an inspector is randomly checking boxes too.
-Can you design and redesign your secret codes to stop the inspector learning your patterns?
-Will you still manage to sneak your code through to your contact and smuggle your goods out of the country?
+{\sc Contrabot}\footnote{\url{https://github.com/gamesbyangelina/contrabot}} (Figure \ref{fig:contrabot}) is a game based on agents that learn abstract codes with gameplay based on understanding, playing against and deceiving a machine learning system.
+%
+Players act as a smuggler trying to label boxes to communicate with a contact on the other side of a customs checkpoint.
+The smuggler is trying to learn the code players use to indicate a box is contraband---but an inspector is randomly checking the same boxes.
 
 The game mechanics revolve around how the smuggler and inspector agents learn to check codes based on codes they have seen.
 These agents have two main processes: learning codes and matching new codes against their learned code.
@@ -123,38 +126,25 @@ The inspector has a larger memory than the smuggler and gameplay is based on usi
 The generalization process is simple, when comparing all codes seen the agents memorize exact matches for black or white tiles and generalizing to gray tiles if a position has been occupied by both colors.
 Despite this simplicity the design accommodates many levels of difficulty and risk-reward considerations for players based on the size of the codes used and memory capacities of each agent.
 
-The game prototype is available to play and fork the design at \url{https://github.com/gamesbyangelina/contrabot}.
+We designed {\sc Contrabot} gameplay around risk-reward considerations for the player.
+Both agents start with an empty learned code and empty memory. 
+The smuggler learns from the first crate inspected and only retains a memory of the 4 most recent codes inspected. 
+The inspector initially only has a random chance to inspect creates; after the inspector chooses to check a crate it begins learning and can either randomly check crates or check crates due to matching.
+The inspector has an infinite memory, meaning the inspector will eventually learn a code that matches any new code (this ends the game).
+After both agents have learned some code, gameplay revolves around creating codes that the inspector will not check (modulo random checks), but that the partner will check.
+The number of crates the player passes to the smuggler serves as a score as the game will eventually end once the inspector learns to match all crates.
+While simple, this design highlights how understanding the ways a machine learning algorithm works can be the core part of playing and succeeding at a game: in this case mastering the code learning algorithm to both avoid failure (inspector checks) and achieve success (smuggler checks).
 
-We designed Contrabot gameplay around risk-reward
-considerations for the player. To do so we started both agents with
-an empty learned code and empty memory. The partner learns
-from the first crate inspected and only retains a memory of the 4
-most recent codes inspected. The inspector instead has a random
-chance to inspect creates - until the inspector randomly chooses to
-check a crate, the inspector will not match any crates. However,
-the inspector has an infinite memory, meaning the inspector will
-eventually learn a code that matches any new code (this ends the
-game). After both agents have learned some code gameplay
-revolves around creating codes that the inspector will not check
-(modulo random checks), but that the partner will check. The
-number of crates the player passes to the partner serves as a score
-as the game will eventually end once the inspector learns to match
-all crates.
 
-We chose these patterns as they highlight how a simple learning
-technique, when visualized, can readily become the core of
-gameplay. Once this is established there are many other patterns
-to use to create different gameplay loops - in this case we took a
-metaphor of code transmission and interception and used it to
-choose patterns for both adversary (inspector) and teammate
-(partner). Many other combinations are possible - below we
-discuss an alternative approach where we explored visualization
-of a different learning mechanism, but provided players with the
-ability to both directly and indirectly manipulate the learned
-information.
-
-\section{{\sc What Did You Do?}}
+\section{What Did You Do?}
 \todo{copy-pasta from FDG paper}
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=0.5\textwidth]{images/WDYD}
+\caption{{\sc What Did You Do?}, a game where the player must supervise non-player characters whose behaviours develop as a result of observing the actions of the player.  The grid pane shows the location of the player and child `shrubs', with the right pane showing the knowledge base the children have learned over time.}
+\label{fig:WDYD}
+\end{figure}
 
 Game based on training and editing a companion AI agent to complete in-game tasks without the companion failing.
 Players control an avatar attempting to raise a computer-controlled child agent in a game environment.
