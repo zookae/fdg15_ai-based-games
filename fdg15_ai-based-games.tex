@@ -69,38 +69,68 @@
 
 \title{AI-based Games: Contrabot and What Did You Do?}
 
-
-\numberofauthors{1}
+\numberofauthors{7} %  in this sample file, there are a *total*
+% of EIGHT authors. SIX appear on the 'first-page' (for formatting
+% reasons) and the remaining two appear in the \additionalauthors section.
+%
 \author{
-\alignauthor
-anonymous
-%Michael Cook, Gillian Smith, Tommy Thompson, Julian Togelius, Alex Zook\\
-%\affaddr{?}\\
-%\affaddr{?}\\
-%\affaddr{all over the fucking place}\\
-%\email{legion@we.are.many}
+\alignauthor Michael Cook\\
+	\affaddr{Comp. Creativity Group}\\
+	\affaddr{Goldsmiths, Uni. London}\\
+	\affaddr{London, UK}\\
+	\email{mike@gamesbyangelina.org}
+\alignauthor Mirjam P. Eladhari\\
+	\affaddr{University of Malta}\\
+	\affaddr{Institute of Digital Games}\\
+	\affaddr{Msida, Malta}\\
+	\email{mirjame@gmail.com}
+\alignauthor Adam M. Smith\\
+	\affaddr{Department of Computational Media}\\
+	\affaddr{University of California, Santa Cruz}\\
+	\affaddr{Santa Cruz, CA}\\
+	\email{adam@adamsmith.as}
+\and  % use '\and' if you need 'another row' of author names
+\alignauthor Gillian Smith\\
+	\affaddr{Northeastern University}\\
+	\affaddr{Playable Innovative Technologies Lab}\\
+	\affaddr{Boston, MA, 02115}\\
+	\email{gillian@ccs.neu.edu}
+\alignauthor Tommy Thompson\\
+	\affaddr{Department of Computing and Mathematics}\\
+	\affaddr{University of Derby}\\
+	\affaddr{Derby, UK}\\
+	\email{tommy@t2thompson.com}
+\alignauthor Julian Togelius\\
+	\affaddr{Department of Computer Science and Engineering}\\
+	\affaddr{New York University}\\
+	\affaddr{New York, NY 11201}\\
+	\email{julian@togelius.com}
 }
+\additionalauthors{
+Additional author: Alex Zook (School of Interactive Computing, Georgia Institute of Technology), email: {\texttt{a.zook@gatech.edu}}.	
+}
+
 
 \toappear{}
 
 \maketitle
 \begin{abstract}
 {\it AI-based games} foreground interaction with an artificial intelligence system as the core of gameplay.
-We present AI-based games games---{\sc Contrabot} and {\sc What Did You Do?}---that use machine learning for novel play experiences.
+We present AI-based games---{\sc Contrabot} and {\sc What Did You Do?}---that use machine learning for novel play experiences.
 \end{abstract}
 
-\category{Applied Computing}{Computers in other domains}{Personal computers and PC applications}[Computer games]
-
-\terms{Design}
-
-\keywords{Game AI, design patterns, machine learning}
+%\category{Applied Computing}{Computers in other domains}{Personal computers and PC applications}[Computer games]
+%
+%\terms{Design}
+%
+%\keywords{Game AI, design patterns, machine learning}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
 
-\noindent Game designs typically use artificial intelligence (AI) as a tool to support creating a desired experience.
-Recently, AI-based games have emerged as an alternative paradigm that foregrounds interaction with an AI system or agent as the core component of a game \cite{eladhari2011:ai-based-games, treanor2015:ai-based-games}.
+\noindent Game designs typically use artificial intelligence (AI) as a tool to create a desired experience.
+AI-based games have recently emerged as an alternative paradigm that foregrounds interaction with an AI system or agent as the core component of a game \cite{eladhari2011:ai-based-games, treanor2015:ai-based-games}.
 Example AI-based games include {\it Black \& White} (about teaching an AI avatar), {\it Spy Party} (about mimicking AI routines), and {\it The Sims} (about guiding simple AI `pets').
 This abstract discusses two prototype AI-based games---{\sc Contrabot} and {\sc What Did You Do?}---that explore interacting with machine learning algorithms as a core gameplay loop.
 
@@ -114,25 +144,25 @@ Agent memories are shown as the set of smaller codes along the right of the larg
 \label{fig:contrabot}
 \end{figure}
 
-{\sc Contrabot}\footnote{\url{https://github.com/gamesbyangelina/contrabot}} (Figure \ref{fig:contrabot}) is a game based on agents that learn abstract codes with gameplay based on understanding, playing against and deceiving a machine learning system.
+{\sc Contrabot}\footnote{\url{https://github.com/gamesbyangelina/contrabot}} (Figure \ref{fig:contrabot}) is a game based on agents that learn abstract codes with gameplay based on understanding, playing against, and deceiving a machine learning system.
 %
 Players act as a smuggler trying to label boxes to communicate with a contact on the other side of a customs checkpoint.
 The smuggler is trying to learn the code players use to indicate a box is contraband---but an inspector is randomly checking the same boxes.
 
 The game mechanics revolve around how the smuggler and inspector agents learn to check codes based on codes they have seen.
 These agents have two main processes: learning codes and matching new codes against their learned code.
-Both agents generalize patterns from example codes---using a form of least general generalization---in their memory to then try to match new codes to these learned patterns.
-The inspector has a larger memory than the smuggler and gameplay is based on using reverse-engineering how learning works to take advantage of the smuggler forgetting old patterns more quickly than the inspector.
+Both agents generalize patterns from example codes in their memory---using a form of least general generalization---to then try to match new codes to these learned patterns.
+The inspector has a larger memory than the smuggler and gameplay is based on reverse-engineering how learning works to take advantage of the smuggler forgetting old patterns more quickly than the inspector.
 %
-The generalization process is simple, when comparing all codes seen the agents memorize exact matches for black or white tiles and generalizing to gray tiles if a position has been occupied by both colors.
-Despite this simplicity the design accommodates many levels of difficulty and risk-reward considerations for players based on the size of the codes used and memory capacities of each agent.
+The generalization process is simple: agents compare all codes seen, memorize exact matches for black or white tiles, and generalize to gray tiles if a position has been occupied by both colors.
+Despite this simplicity, the design allows many difficulty levels and risk-reward considerations for players based on the size of the codes used and agent memory capacities.
 
 We designed {\sc Contrabot} gameplay around risk-reward considerations for the player.
 Both agents start with an empty learned code and empty memory. 
-The smuggler learns from the first crate inspected and only retains a memory of the 4 most recent codes inspected. 
+The smuggler learns from the first crate inspected and only retains a memory of the four most recent codes inspected. 
 The inspector initially only has a random chance to inspect creates; after the inspector chooses to check a crate it begins learning and can either randomly check crates or check crates due to matching.
 The inspector has an infinite memory, meaning the inspector will eventually learn a code that matches any new code (this ends the game).
-After both agents have learned some code, gameplay revolves around creating codes that the inspector will not check (modulo random checks), but that the partner will check.
+As both agents learn codes, gameplay centers on creating new codes that the inspector will not check (modulo random checks), but that the smuggler will check.
 The number of crates the player passes to the smuggler serves as a score as the game will eventually end once the inspector learns to match all crates.
 While simple, this design highlights how understanding the ways a machine learning algorithm works can be the core part of playing and succeeding at a game: in this case mastering the code learning algorithm to both avoid failure (inspector checks) and achieve success (smuggler checks).
 
@@ -150,37 +180,35 @@ Players control a parent shrub attempting to raise an AI-controlled child shrub 
 The challenge derives from the child not being directly controlled by the player: the child learns behavioral rules to mimic the parent (player).
 The game is turn-based and takes place in a grid world populated with helpful items (e.g., food) and obstacles (e.g., impassable rivers and stones).
 
-Players aim to guide their navigate obstacles in the environment to reach a destination with their child still alive.
-Obstacles include fording impassable rivers by picking up stones and dropping them into the river.
+Players aim to navigate obstacles in the environment to reach a destination with their child still alive.
+Navigation includes fording impassable rivers by picking up stones and dropping them into the river.
 Parents may pick up objects or eat food to restore their energy level---depleting either the parent or child energy fully ends the game.
 The environment is also more hazardous to the child than the parent: children may be crushed by dropping a stone on themselves after attempting to carry it too long or may drown in rivers.
 
 The child observes the parent and learns rules of the form ``when surrounded with certain objects, perform a given action.''
 For example, the child could learn a rule that when standing with a stone to the left and a pond behind, move forward.
 Or if in front of a strawberry, pick it up.
-Rules are re-learned every ten turns, and there is no limit to how many rules can be learned---this depends only on how many regularities the rule learning algorithm can find within the recent history of what the parent has
-done.
+Rules are re-learned every ten turns, and there is no limit to how many rules can be learned---this depends only on how many regularities the rule learning algorithm can find within the recent history of what the parent has done.
 The rule learning algorithm is a simple brute force search for all rules that can be constructed from recent activity; if using longer action histories or more actions, this could be replaced with the a priori rule learning algorithm.
 
 We designed the rule learning system to play off food scarcity in the environment and the available hazards to the child.
 On any turn the player may remove rules from the child's mind by spending energy from the parent.
-Replacing energy requires food, meaning any adjustments made to keep the child from inadvertently harming itself comes at the cost of limited resources to stay alive.
-Thus, promising courses of action can introduce trade-offs because your children are watching and could learn the wrong things.
+Replacing energy requires food, meaning any adjustments made to keep the child from inadvertently harming itself come at the cost of limited resources to stay alive.
+Thus, promising courses of action can introduce trade-offs because the child is watching and may learn the wrong things.
 For example, one might want to approach a stone from the opposite direction than what the shortest path would suggest, to avoid that the child sees regularities.
 However, this takes more time and allows the child to potentially learn other bad behavior in the meantime.
-These trade-offs induce players to explicitly reason about how the children learn and how to manage in-game resources around that learning.
+These trade-offs induce players to explicitly reason about how the child learns and how to manage in-game resources around that learning.
 
 \section{Discussion}
 These games raise interesting problems with presenting machine learned knowledge to the player.
 In {\sc Contrabot} learned codes are color-coded and the history of examples can be explicitly shown to the player for the smuggler (but only partially shown for the inspector).
 Players can readily learn the visual language of the game, but not understand the gameplay implications of code choices.
 At the same time the code language is very simple and can quickly become boring.
-The way {\sc What Did You Do?} presents learned partial rules that may not be thought of as 'knowledge' to a human player unfamiliar with machine learning (such as what to do when a rock is to your left, but not what to do in the general case of being adjacent to rocks).
-This means that editing knowledge can be exhausting, since there may be multiple cases that are all undesirable, which need to be manually removed when to the player they may seem to all stem from the same original case.
+{\sc What Did You Do?}'s learned partial rules may not be thought of as `knowledge' to a human player unfamiliar with machine learning (such as what to do when a rock is to your left, but not what to do in the general case of being adjacent to rocks).
+This means that editing knowledge can be exhausting, as there may be multiple cases that are all undesirable (seeming to stem from the same original case to the player), which need to be manually removed.
 %
-The presentation of machine learned knowledge both in {\sc Contrabot} and {\sc What Are You Doing?} presents interesting possibilities of how to use these technique in future game projects, and indicates the richness of new ideas to be found in applying these patterns to new aspects of gameplay.
+The presentation of machine learned knowledge both in {\sc Contrabot} and {\sc What Are You Doing?} illustrates possibilities for using these techniques in future game projects, and indicates the richness of new ideas for AI-based games.
 
-%\cite{smith2012:endlessweb}
 
 \bibliographystyle{abbrv}
 \bibliography{../latex/lib}
